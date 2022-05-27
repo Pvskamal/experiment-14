@@ -1,0 +1,40 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import math
+data=pd.read_csv('database.csv')
+data['all costs']=data['All Costs']/1000000
+plt.style.use('seaborn')
+_=sns.boxplot(data['All Costs'],data=data)
+_=plt.title('cost of accidents in (millions)us$')
+plt.show()
+_=sns.boxplot(data['Net Loss (Barrels)'],data=data)
+_=plt.title('Net Loss(Barrels)')
+plt.show()
+x={}
+for i in range(66):
+    x[i]=math.pow(2.71828,-1*33)*math.pow(33,i)/math.factorial(i)
+        
+p_poisson=pd.DataFrame(x.items(),columns=['x','px'])
+plt.style.use('seaborn')
+fig=plt.subplots(figsize=(15,10))
+_=plt.plot(p_poisson['x'],p_poisson['px'],marker='.',color='purple',linestyle='solid')
+plt.xlabel('numberof accidents per month(n)')
+plt.ylabel('p(x<=n)')
+plt.title('probability mass function')
+plt.show()
+def cdf(data):
+    n=len(data)
+    x=np.sort(data)
+    y=np.arange(1,n+1)/n
+    return x,y
+np.random.seed(42)
+samples_poisson=np.random.poisson(33,10000)
+x,y=cdf(samples_poisson)
+fig=plt.subplots(figsize=(15,10))
+_=plt.plot(x,y,marker='.',alpha=0.5,color='purple',linestyle='solid')
+plt.xlabel('number of accidents per month(n)')
+plt.ylabel('p(x<=n)')
+plt.title('cumulative distribution function')
+plt.show()
